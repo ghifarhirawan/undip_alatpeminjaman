@@ -1,3 +1,22 @@
+type Equipment = record {
+  id : nat64;
+  updated_at : opt nat64;
+  name : text;
+  rental_price : nat64;
+  description : text;
+  created_at : nat64;
+};
+type EquipmentPayload = record {
+  name : text;
+  rental_price : nat64;
+  description : text;
+};
+type Error = variant { NotFound : record { msg : text } };
+type Result = variant { Ok : Equipment; Err : Error };
 service : {
-    "greet": (text) -> (text) query;
+  add_equipment : (EquipmentPayload) -> (opt Equipment);
+  delete_equipment : (nat64) -> (Result);
+  get_equipment : (nat64) -> (Result) query;
+  greet : (text) -> (text) query;
+  update_equipment : (nat64, EquipmentPayload) -> (Result);
 }
